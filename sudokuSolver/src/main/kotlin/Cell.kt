@@ -5,6 +5,8 @@ class Cell(val value: String) {
             field = value
         }
 
+
+
     init {
         // if value equals '-' set isChangeable to false
         if(value != "-"){

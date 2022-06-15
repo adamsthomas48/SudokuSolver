@@ -39,7 +39,11 @@ class Solver(val inputFileName: String) {
         return cells
     }
 
-    fun createCell(value: String): Cell {
+    fun createCell(value: String, i: Int, j: Int): Cell {
+        var row: Row
+        var column: Column
+        var block: Block
+
         return Cell(value)
     }
 }
