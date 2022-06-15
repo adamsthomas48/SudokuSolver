@@ -1,3 +1,3 @@
-class Row(puzzle: Puzzle, cells: List<Cell>) : Container(puzzle, cells){
+class Row(cells: List<Cell>) : Container(cells){
 
 }

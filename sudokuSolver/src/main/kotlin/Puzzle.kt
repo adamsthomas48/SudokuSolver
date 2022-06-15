@@ -3,42 +3,11 @@ class Puzzle(val n: Int, val cells: List<List<Cell>>) {
     val columns = setColumns(cells)
     val blocks = setBlocks(cells)
 
-    fun printAttributes(){
-        println("n: $n")
-        //print value of cells
-        for (row in cells) {
-            for (cell in row) {
-                print("${cell.value} ")
-            }
-            println()
-        }
-        //print each cell.value in each row of Rows
-
-        //print each cell.value in each row of Blocks
-        for (block in blocks) {
-            print("Block: ")
-            for (cell in block.cells) {
-                print("${cell.value} ")
-            }
-            println()
-        }
-
-        //print each cell.value in each row of Columns
-        for (column in columns) {
-            print("Column: ")
-            for (cell in column.cells) {
-                print("${cell.value} ")
-            }
-            println()
-        }
-
-
-    }
 
     fun setRows(cells: List<List<Cell>>): List<Row> {
         val rows = mutableListOf<Row>()
         for (i in 0 until n) {
-            val row = Row(this, cells[i])
+            val row = Row(cells[i])
             rows.add(row)
         }
         return rows
@@ -52,7 +21,7 @@ class Puzzle(val n: Int, val cells: List<List<Cell>>) {
 
                 column.add(cells[j][i])
             }
-            columns.add(Column(this, column))
+            columns.add(Column(column))
         }
         return columns
     }
@@ -70,7 +39,7 @@ class Puzzle(val n: Int, val cells: List<List<Cell>>) {
                         blockCells.add(cells[k][l])
                     }
                 }
-                val block = Block(this, blockCells)
+                val block = Block(blockCells)
                 blocks.add(block)
             }
         }

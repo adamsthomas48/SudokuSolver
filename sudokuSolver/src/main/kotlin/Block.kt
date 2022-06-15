@@ -1,4 +1,4 @@
-class Block(puzzle: Puzzle, cells: List<Cell>): Container(puzzle, cells) {
+class Block(cells: List<Cell>): Container(cells) {
 
 
 }

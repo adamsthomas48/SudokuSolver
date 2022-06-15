@@ -1,16 +1,5 @@
-class Cell(val value: String) {
+class Cell(val value: String, val rowIndex: Int, val columnIndex: Int, val blockIndex: Int, val isEditable: Boolean) {
     var currentValue = value
-    var isChangeable: Boolean = true
-        private set(value){
-            field = value
-        }
 
 
-
-    init {
-        // if value equals '-' set isChangeable to false
-        if(value != "-"){
-            isChangeable = false
-        }
-    }
 }

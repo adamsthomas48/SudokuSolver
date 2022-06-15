@@ -1,3 +1,3 @@
-class Column(puzzle: Puzzle, cells: List<Cell>): Container(puzzle, cells) {
+class Column(cells: List<Cell>): Container(cells) {
 
 }
