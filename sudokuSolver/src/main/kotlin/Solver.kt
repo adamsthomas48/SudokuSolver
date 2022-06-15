@@ -15,6 +15,9 @@ class Solver(val inputFileName: String) {
         println()
         puzzleStack.push(currentPuzzle)
         while (!puzzleStack.empty() && !currentPuzzle.isSolved()) {
+            if(OnlyOnePossibilityStrategy().execute(currentPuzzle)) {
+                continue
+            }
             if(GuessStrategy().execute(currentPuzzle)) {
                 // push this version of the puzzle onto the stack
                 puzzleStack.push(currentPuzzle.deepCopy())

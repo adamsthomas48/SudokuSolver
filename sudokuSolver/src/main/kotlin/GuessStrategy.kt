@@ -23,7 +23,7 @@ class GuessStrategy: CellSolutionStrategy() {
             if(row.search(value) && col.search(value) && block.search(value)){
                 //println("==========================")
                 cell.value = value
-                //puzzle.printPuzzle()
+                println("Guess: ${cell.rowIndex} ${cell.columnIndex} ${cell.value}")
                 return true
             }
         }
