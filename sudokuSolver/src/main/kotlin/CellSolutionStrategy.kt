@@ -16,8 +16,6 @@ abstract class CellSolutionStrategy {
         elapsedTime += stopTimer()
         return changeMade
 
-
-
     }
 
     abstract fun findApplicableCells(puzzle: Puzzle): Pair<List<Cell>, Any>

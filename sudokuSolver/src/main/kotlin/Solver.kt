@@ -1,23 +1,44 @@
 import java.io.File
+import java.util.*
 
 class Solver(val inputFileName: String) {
     val file = File(inputFileName)
     val n = file.readLines()[0].toInt()
     val cells = createCellList()
-    val puzzle: Puzzle = Puzzle(n, cells)
     val possibleValues = setPossibleValues()
+    var currentPuzzle: Puzzle = Puzzle(n, cells, possibleValues)
+    val puzzleStack: Stack<Puzzle> = Stack()
+
+
+    fun solve() {
+        currentPuzzle.printPuzzle()
+        println()
+        puzzleStack.push(currentPuzzle)
+        while (!puzzleStack.empty() && !currentPuzzle.isSolved()) {
+            if(GuessStrategy().execute(currentPuzzle)) {
+                puzzleStack.push(currentPuzzle)
+            } else {
+                currentPuzzle = puzzleStack.pop()
+            }
+
+        }
+        currentPuzzle.printPuzzle()
+
+    }
 
 
 
     fun setPossibleValues(): List<String> {
         val possibleValues = mutableListOf<String>()
         file.readLines()[1].forEach {
-            if (it != ' ') {
+            if (it != '-' && it != ' ') {
                 possibleValues.add(it.toString())
             }
         }
         return possibleValues
     }
+
+
 
     fun createCellList(): List<List<Cell>> {
         val cells = mutableListOf<List<Cell>>()
@@ -40,8 +61,8 @@ class Solver(val inputFileName: String) {
     }
 
     fun createCell(value: String, i: Int, j: Int): Cell {
-        val col = i
-        val row = j
+        val col = j
+        val row = i
         //determine what sudoku block the cell is in based on i j and size n
         val block = getBlockIndex(i, j)
         return Cell(value, row, col, block, (value == "-"))

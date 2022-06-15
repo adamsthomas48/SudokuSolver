@@ -1,9 +1,29 @@
-class Puzzle(val n: Int, val cells: List<List<Cell>>) {
+class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: List<String>) {
     val rows = setRows(cells)
     val columns = setColumns(cells)
     val blocks = setBlocks(cells)
 
 
+    fun isSolved(): Boolean {
+        // if all cells in puzzle have value that isn't "-" set to true else false
+        for (row in this.cells) {
+            for (cell in row) {
+                if (cell.value == "-") {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    fun printPuzzle() {
+        for (row in this.cells) {
+            for (cell in row) {
+                print(cell.value + " ")
+            }
+            println()
+        }
+    }
     fun setRows(cells: List<List<Cell>>): List<Row> {
         val rows = mutableListOf<Row>()
         for (i in 0 until n) {
@@ -45,6 +65,7 @@ class Puzzle(val n: Int, val cells: List<List<Cell>>) {
         }
         return blocks
     }
+
 
 
 }
