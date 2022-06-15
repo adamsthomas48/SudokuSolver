@@ -1,4 +1,6 @@
-class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: List<String>) {
+import com.google.gson.Gson
+
+data class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: List<String>) {
     val rows = setRows(cells)
     val columns = setColumns(cells)
     val blocks = setBlocks(cells)
@@ -16,6 +18,10 @@ class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: List<S
         return true
     }
 
+    fun deepCopy() : Puzzle {
+        return Gson().fromJson(Gson().toJson(this), this.javaClass)
+    }
+
     fun printPuzzle() {
         for (row in this.cells) {
             for (cell in row) {
@@ -23,6 +29,7 @@ class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: List<S
             }
             println()
         }
+        println("-----------------------------------------------------")
     }
     fun setRows(cells: List<List<Cell>>): List<Row> {
         val rows = mutableListOf<Row>()

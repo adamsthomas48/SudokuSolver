@@ -21,9 +21,9 @@ class GuessStrategy: CellSolutionStrategy() {
 
         for (value in puzzle.possibleValues){
             if(row.search(value) && col.search(value) && block.search(value)){
-                println("==========================")
+                //println("==========================")
                 cell.value = value
-                puzzle.printPuzzle()
+                //puzzle.printPuzzle()
                 return true
             }
         }

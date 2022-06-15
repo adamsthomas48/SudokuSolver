@@ -16,9 +16,12 @@ class Solver(val inputFileName: String) {
         puzzleStack.push(currentPuzzle)
         while (!puzzleStack.empty() && !currentPuzzle.isSolved()) {
             if(GuessStrategy().execute(currentPuzzle)) {
-                puzzleStack.push(currentPuzzle)
+                // push this version of the puzzle onto the stack
+                puzzleStack.push(currentPuzzle.deepCopy())
             } else {
+                println("Backtracking")
                 currentPuzzle = puzzleStack.pop()
+
             }
 
         }
