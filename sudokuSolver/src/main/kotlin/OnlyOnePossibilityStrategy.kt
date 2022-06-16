@@ -4,10 +4,13 @@ class OnlyOnePossibilityStrategy: CellSolutionStrategy() {
         for (row in puzzle.cells) {
             for(cell in row) {
                 if(cell.value == "-"){
-                    cell.setPossibleValues(puzzle)
-                    if (cell.possibleValues.size == 1) {
-                        return Pair(listOf(cell), cell.possibleValues.first())
+                    if(cell.isEditable) {
+                        cell.setPossibleValues(puzzle)
+                        if (cell.possibleValues.size == 1) {
+                            return Pair(listOf(cell), cell.possibleValues.first())
+                        }
                     }
+
                 }
 
             }
@@ -22,9 +25,9 @@ class OnlyOnePossibilityStrategy: CellSolutionStrategy() {
         }
         val cell = cells.first()
         val value = manipulationParam as String
-        if(cell.value == "-") {
-            cell.value = value
-            println("Using OnlyOnePossibilityStrategy to set value of cell ${cell.rowIndex} ${cell.columnIndex} to $value")
+        if(cell.currentValue == "-") {
+            cell.currentValue = value
+            //println("Using OnlyOnePossibilityStrategy to set value of cell ${cell.rowIndex} ${cell.columnIndex} to $value")
             return true
         }
         return false

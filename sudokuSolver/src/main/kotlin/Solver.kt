@@ -4,33 +4,58 @@ import java.util.*
 class Solver(val inputFileName: String) {
     val file = File(inputFileName)
     val n = file.readLines()[0].toInt()
-    val cells = createCellList()
+    var cells = createCellList()
     val possibleValues = setPossibleValues()
     var currentPuzzle: Puzzle = Puzzle(n, cells, possibleValues)
+    lateinit var originalPuzzle: Puzzle
     val puzzleStack: Stack<Puzzle> = Stack()
+    var result: String = "Puzzle not solvable"
+    var isSolvable = true
+    var isValid = true
+    val onlyOnePossibilityStrategy = OnlyOnePossibilityStrategy()
+    //val nakedPairStrategy = NakedPairStrategy()
+    val guessStrategy = GuessStrategy()
+    var solutionCount = 0
+    var solution: String = ""
 
 
     fun solve() {
-        currentPuzzle.printPuzzle()
+
+        originalPuzzle = currentPuzzle.deepCopy()
         println()
         puzzleStack.push(currentPuzzle)
         while (!puzzleStack.empty() && !currentPuzzle.isSolved()) {
-            if(OnlyOnePossibilityStrategy().execute(currentPuzzle)) {
-                continue
-            }
-            if(GuessStrategy().execute(currentPuzzle)) {
+//            if(onlyOnePossibilityStrategy.execute(currentPuzzle)) {
+//                continue
+//            }
+            if(guessStrategy.execute(currentPuzzle)) {
                 // push this version of the puzzle onto the stack
                 puzzleStack.push(currentPuzzle.deepCopy())
             } else {
-                println("Backtracking")
+
                 currentPuzzle = puzzleStack.pop()
 
             }
+            if(currentPuzzle.isSolved()) {
+                if(currentPuzzle.getPuzzleString() != solution) {
+                    solutionCount++
+                    println("Solution $solutionCount:")
+                    currentPuzzle.printPuzzle()
+
+                }
+
+
+                if(solutionCount > 1){
+                    isValid = false
+                    break
+                }
+            }
 
         }
-        currentPuzzle.printPuzzle()
+        printResult()
 
     }
+
 
 
 
@@ -42,6 +67,28 @@ class Solver(val inputFileName: String) {
             }
         }
         return possibleValues
+    }
+
+    fun printResult() {
+        if(!isValid){
+            result = "Puzzle is not valid: Has multiple solutions"
+        }else if(currentPuzzle.isSolved()) {
+            var totalTime = onlyOnePossibilityStrategy.elapsedTime + guessStrategy.elapsedTime
+            var solvedResult = ""
+            solvedResult += originalPuzzle.getPuzzleString()
+            solvedResult += currentPuzzle.getPuzzleString() + "\n"
+
+            solvedResult += "Total time: " + totalTime + "s\n"
+            solvedResult += "Only one possibility strategy: " + onlyOnePossibilityStrategy.numUses + " - "
+            solvedResult += "Elapsed time: " + onlyOnePossibilityStrategy.elapsedTime + "\n"
+            solvedResult += "Guess strategy: " + guessStrategy.numUses + " - "
+            solvedResult += "Elapsed time: " + guessStrategy.elapsedTime + "\n"
+
+
+            result = solvedResult
+
+        }
+        println(result)
     }
 
 

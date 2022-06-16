@@ -10,26 +10,46 @@ data class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: L
         // if all cells in puzzle have value that isn't "-" set to true else false
         for (row in this.cells) {
             for (cell in row) {
-                if (cell.value == "-") {
+                if (cell.currentValue == "-") {
                     return false
                 }
             }
         }
+        // check all each row, column, and block for duplicates
         return true
     }
+
 
     fun deepCopy() : Puzzle {
         return Gson().fromJson(Gson().toJson(this), this.javaClass)
     }
 
+    fun setCell(cell: Cell) {
+        this.cells[cell.rowIndex][cell.columnIndex].currentValue = cell.currentValue
+        this.rows[cell.rowIndex].getCell(cell.columnIndex).currentValue = cell.currentValue
+        this.columns[cell.columnIndex].getCell(cell.rowIndex).currentValue = cell.currentValue
+        this.blocks[cell.blockIndex].getCell(cell.blockIndex).currentValue = cell.currentValue
+    }
+
     fun printPuzzle() {
         for (row in this.cells) {
             for (cell in row) {
-                print(cell.value + " ")
+                print(cell.currentValue + " ")
             }
             println()
         }
         println("-----------------------------------------------------")
+    }
+
+    fun getPuzzleString(): String {
+        var puzzleString = ""
+        for (row in this.cells) {
+            for (cell in row) {
+                puzzleString += cell.currentValue + " "
+            }
+            puzzleString += "\n"
+        }
+        return puzzleString + "\n \n"
     }
     fun setRows(cells: List<List<Cell>>): List<Row> {
         val rows = mutableListOf<Row>()
@@ -53,8 +73,7 @@ data class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: L
         return columns
     }
 
-    //create list of blocks based on number of rows and columns
-    //A block represents a sudoku puzzle square of size sqrt(n)
+
     fun setBlocks(cells: List<List<Cell>>): List<Block> {
         val blocks = mutableListOf<Block>()
         val blockSize = Math.sqrt(n.toDouble()).toInt()

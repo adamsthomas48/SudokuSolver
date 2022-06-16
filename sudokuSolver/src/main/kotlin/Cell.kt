@@ -2,7 +2,6 @@ import com.google.gson.Gson
 
 data class Cell(var value: String, val rowIndex: Int, val columnIndex: Int, val blockIndex: Int, val isEditable: Boolean) {
     var currentValue = value
-
     val possibleValues = mutableListOf<String>()
 
     fun setPossibleValues(puzzle: Puzzle) {
@@ -15,11 +14,12 @@ data class Cell(var value: String, val rowIndex: Int, val columnIndex: Int, val 
         for (value in puzzle.possibleValues){
             if(row.search(value) && col.search(value) && block.search(value)){
                 possibleValues.add(value)
-
             }
         }
 
     }
+
+
 
 
 

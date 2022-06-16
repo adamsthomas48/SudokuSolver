@@ -1,7 +1,7 @@
 abstract class Container(val cells: List<Cell>) {
     fun search(value: String): Boolean{
         for (cell in cells) {
-            if (cell.value == value) {
+            if (cell.currentValue == value) {
                 return false
             }
         }
@@ -10,9 +10,13 @@ abstract class Container(val cells: List<Cell>) {
 
     fun print() {
         for (cell in cells) {
-            print(cell.value)
+            print(cell.currentValue)
         }
         println()
+    }
+
+    fun getCell(index: Int): Cell {
+        return cells[index]
     }
 
 }
