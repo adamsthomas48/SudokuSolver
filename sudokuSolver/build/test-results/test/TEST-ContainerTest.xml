@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ContainerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2022-06-16T05:37:22" hostname="Adams-MacBook-Pro.local" time="0.005">
+  <properties/>
+  <testcase name="search()" classname="ContainerTest" time="0.001"/>
+  <testcase name="update()" classname="ContainerTest" time="0.001"/>
+  <testcase name="getCell()" classname="ContainerTest" time="0.001"/>
+  <testcase name="print()" classname="ContainerTest" time="0.001"/>
+  <testcase name="getCells()" classname="ContainerTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

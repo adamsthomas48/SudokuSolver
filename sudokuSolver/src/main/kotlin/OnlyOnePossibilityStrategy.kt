@@ -27,6 +27,9 @@ class OnlyOnePossibilityStrategy: CellSolutionStrategy() {
         val value = manipulationParam as String
         if(cell.currentValue == "-") {
             cell.currentValue = value
+            puzzle.rows[cell.rowIndex].update(cell, value)
+            puzzle.columns[cell.columnIndex].update(cell, value)
+            puzzle.blocks[cell.blockIndex].update(cell, value)
             //println("Using OnlyOnePossibilityStrategy to set value of cell ${cell.rowIndex} ${cell.columnIndex} to $value")
             return true
         }

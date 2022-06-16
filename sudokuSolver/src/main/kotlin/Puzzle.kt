@@ -1,9 +1,16 @@
 import com.google.gson.Gson
 
-data class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: List<String>) {
-    val rows = setRows(cells)
-    val columns = setColumns(cells)
-    val blocks = setBlocks(cells)
+class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: List<String>) {
+    val rows : List<Row>
+    val columns : List<Column>
+    val blocks : List<Block>
+
+    init {
+        rows = setRows(cells)
+        columns = setColumns(cells)
+        blocks = setBlocks(cells)
+
+    }
 
 
     fun isSolved(): Boolean {
@@ -20,16 +27,11 @@ data class Puzzle(val n: Int, val cells: List<List<Cell>>, val possibleValues: L
     }
 
 
+
     fun deepCopy() : Puzzle {
         return Gson().fromJson(Gson().toJson(this), this.javaClass)
     }
 
-    fun setCell(cell: Cell) {
-        this.cells[cell.rowIndex][cell.columnIndex].currentValue = cell.currentValue
-        this.rows[cell.rowIndex].getCell(cell.columnIndex).currentValue = cell.currentValue
-        this.columns[cell.columnIndex].getCell(cell.rowIndex).currentValue = cell.currentValue
-        this.blocks[cell.blockIndex].getCell(cell.blockIndex).currentValue = cell.currentValue
-    }
 
     fun printPuzzle() {
         for (row in this.cells) {

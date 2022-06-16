@@ -1,6 +1,6 @@
 import com.google.gson.Gson
 
-data class Cell(var value: String, val rowIndex: Int, val columnIndex: Int, val blockIndex: Int, val isEditable: Boolean) {
+class Cell(var value: String, val rowIndex: Int, val columnIndex: Int, val blockIndex: Int, val isEditable: Boolean) {
     var currentValue = value
     val possibleValues = mutableListOf<String>()
 
@@ -17,6 +17,10 @@ data class Cell(var value: String, val rowIndex: Int, val columnIndex: Int, val 
             }
         }
 
+    }
+
+    fun deepCopy(): Cell {
+        return Gson().fromJson(Gson().toJson(this), this.javaClass)
     }
 
 

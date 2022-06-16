@@ -27,14 +27,11 @@ class GuessStrategy: CellSolutionStrategy() {
 
         for (value in puzzle.possibleValues){
             if(row.search(value) && col.search(value) && block.search(value)){
-                //println("==========================")
-                println("Guess: ${cell1.rowIndex} ${cell1.columnIndex} ${cell1.currentValue}")
-                print("Current Row: ")
-                print(row.print())
                 cell1.currentValue = value
-                //puzzle.setCell(cell1)
+                row.update(cell1, value)
+                col.update(cell1, value)
+                block.update(cell1, value)
 
-                puzzle.printPuzzle()
                 return true
             }
         }

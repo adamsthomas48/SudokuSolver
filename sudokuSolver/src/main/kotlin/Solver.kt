@@ -13,7 +13,6 @@ class Solver(val inputFileName: String) {
     var isSolvable = true
     var isValid = true
     val onlyOnePossibilityStrategy = OnlyOnePossibilityStrategy()
-    //val nakedPairStrategy = NakedPairStrategy()
     val guessStrategy = GuessStrategy()
     var solutionCount = 0
     var solution: String = ""
@@ -25,22 +24,27 @@ class Solver(val inputFileName: String) {
         println()
         puzzleStack.push(currentPuzzle)
         while (!puzzleStack.empty() && !currentPuzzle.isSolved()) {
-//            if(onlyOnePossibilityStrategy.execute(currentPuzzle)) {
-//                continue
-//            }
-            if(guessStrategy.execute(currentPuzzle)) {
+            if(onlyOnePossibilityStrategy.execute(currentPuzzle)) {
+                println("Only one possibility strategy executed")
+                continue
+            }
+            else if(guessStrategy.execute(currentPuzzle)) {
                 // push this version of the puzzle onto the stack
                 puzzleStack.push(currentPuzzle.deepCopy())
+
+
             } else {
 
                 currentPuzzle = puzzleStack.pop()
+                println("Backtracking")
+                currentPuzzle.printPuzzle()
 
             }
             if(currentPuzzle.isSolved()) {
                 if(currentPuzzle.getPuzzleString() != solution) {
                     solutionCount++
-                    println("Solution $solutionCount:")
-                    currentPuzzle.printPuzzle()
+//                    println("Solution $solutionCount:")
+//                    currentPuzzle.printPuzzle()
 
                 }
 
@@ -87,6 +91,9 @@ class Solver(val inputFileName: String) {
 
             result = solvedResult
 
+        }
+        else {
+            currentPuzzle.printPuzzle()
         }
         println(result)
     }
