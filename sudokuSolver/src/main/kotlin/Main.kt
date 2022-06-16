@@ -6,5 +6,5 @@ fun main(args: Array<String>) {
     solver2.solve()
 
 
-    
+
 }
